@@ -1,0 +1,17 @@
+{
+  "name": "nodechat",
+  "description": "",
+  "main": "",
+  "authors": [
+    "furkantarikgocmen <f.tarikgocmen@outlook.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chat",
+    "nodejs"
+  ],
+  "homepage": "https://github.com/furkantarikgocmen/nodeChat",
+  "dependencies": {
+    "angular": "^1.7.8"
+  }
+}
