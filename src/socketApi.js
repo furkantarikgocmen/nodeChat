@@ -6,6 +6,10 @@ const socketApi = {
     io
 };
 
+//libs
+const Users = require('./lib/Users');
+const Rooms = require('./lib/Rooms');
+
 //Socket authorization
 io.use(socketAuthorization);
 
@@ -21,10 +25,31 @@ io.adapter(redisAdapter({
 io.on('connection', socket => {
     console.log('a user logged in', socket.request.user.name); //özellikle connection yapılmadığı sürece loglamıyor
 
-    socket.on('Selam', () =>{
-        console.log('Selam');
-    })
+    Users.upsert(socket.id, socket.request.user);
 
+    Rooms.list(rooms => {
+        io.emit('roomList', rooms);
+    });
+
+    Users.list(users => {
+       io.emit('onlineList', users);
+    });
+
+    socket.on('newRoom', roomName => {
+        Rooms.upsert(roomName);
+        Rooms.list(rooms => {
+            io.emit('roomList', rooms);
+        });
+    });
+
+    socket.on('disconnect', () => {
+        Users.remove(socket.request.user.googleId);
+
+        Users.list(users => {
+            //console.log(users);
+            io.emit('onlineList', users);
+        });
+    })
 });
 
 
