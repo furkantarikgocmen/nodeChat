@@ -22,7 +22,7 @@ body {
     font-weight: 400;
     background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/image.jpg");
     background-size: cover;
-    background-repeat: none;
+    background-repeat: no-repeat;
 }
 
 ul,li{
@@ -102,7 +102,7 @@ ul,li{
     background-position: top 12px left 14px;
     border-radius: 50%;
 }
-.container .left .people {
+.tabArea{
     margin-left: -1px;
     border-right: 1px solid var(--light);
     border-left: 1px solid var(--light);
@@ -399,6 +399,7 @@ ul,li{
 .tab li{
     width: 50%;
     float: left;
+    cursor: pointer;
 }
 .tab li a{
     height:40px;

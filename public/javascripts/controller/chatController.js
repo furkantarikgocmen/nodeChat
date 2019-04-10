@@ -1,6 +1,8 @@
 app.controller('chatController' , ['$scope', ($scope) => {
+    $scope.activeTab = 1;
+
+    $scope.changeTab =  tab => {
+        $scope.activeTab = tab;
+    };
     const socket = io.connect('http://localhost:3000');
-    //socket.emit('Selam');
-    //indexController ile aynı sorun var.
-    //hw reposunda socket klasöründeki index.html ile sayfayı açtığım zaman logluyor ama bunda loglamıyor.
-}])
+}]);
