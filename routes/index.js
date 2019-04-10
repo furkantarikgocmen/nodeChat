@@ -10,4 +10,8 @@ router.get('/', (req, res, next) => {
 
 });
 
+router.get('/getUser', (req, res, next) => {
+  res.json(req.user)
+});
+
 module.exports = router;

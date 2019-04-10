@@ -9,6 +9,7 @@ const socketApi = {
 //libs
 const Users = require('./lib/Users');
 const Rooms = require('./lib/Rooms');
+const Messages = require('./lib/Messages');
 
 //Socket authorization
 io.use(socketAuthorization);
@@ -35,6 +36,21 @@ io.on('connection', socket => {
        io.emit('onlineList', users);
     });
 
+    socket.on('newMessage', data => {
+        const messageData = {
+            ...data,
+            userId : socket.request.user._id,
+            username : socket.request.user.name,
+            surname : socket.request.user.surname
+        };
+
+        Messages.upsert(messageData);
+
+        socket.broadcast.emit('receiveMessage', messageData);
+
+
+    });
+
     socket.on('newRoom', roomName => {
         Rooms.upsert(roomName);
         Rooms.list(rooms => {
@@ -43,7 +59,7 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', () => {
-        Users.remove(socket.request.user.googleId);
+        Users.remove(socket.request.user._id);
 
         Users.list(users => {
             //console.log(users);
